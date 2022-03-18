@@ -1,0 +1,15 @@
+{% set routeName = app.request.attributes.get('_route') %}
+<nav id="main-nav" class="open">
+    <ul>
+        <li class="{{ routeName == 'default_home' ? 'active' : '' }}">
+            <a href="{{ path('app_home') }}">
+                <i class="fa fa-home me-2"></i>Accueil
+            </a>
+        </li>
+        <li class="{{ routeName == 'app_register' ? 'active' : '' }}">
+            <a href="{{ path('app_register') }}">
+                <i class="fa fa-user-plus me-2"></i>Register
+            </a>
+        </li>
+    </ul>
+</nav>
