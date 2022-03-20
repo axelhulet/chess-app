@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Ajoutez un tournoi</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form._token) }}
+    <div class="row">
+        <div class="form-group col-md-4">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.city) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.date) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            {{ form_row(form.classed) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.eloMin) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.eloMax) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            {{ form_row(form.ageCategory) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.genderCategory) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.typeCategory) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            {{ form_row(form.roundsNumber) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.minPlayers) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(form.maxPlayers) }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+Ajouter un tournoi
+{% endblock %}
+

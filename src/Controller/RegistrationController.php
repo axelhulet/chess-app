@@ -38,6 +38,7 @@ class RegistrationController extends AbstractController
                 $user->setPicture($pictureFileName);
             }
             $user->setActive('1');
+            $user->setAgeCategory();
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

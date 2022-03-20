@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tournois{% endblock %}
+
+{% block body %}
+    <div>
+        <a class="btn btn-dark mb-2 orange" href="{{ path('add_tournament') }}">Nouveau</a>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Date</th>
+                <th scope="col">Classé</th>
+                <th scope="col">Elo</th>
+                <th scope="col">Catégorie d'âge</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Type</th>
+                <th scope="col">Rondes</th>
+                <th scope="col">Joueurs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tournament in tournaments %}
+                <tr>
+                    <td>{{ tournament.name }}</td>
+                    <td>{{ tournament.city }}</td>
+                    <td>{{ tournament.date | date("d-m-Y") }}</td>
+                    <td>{{ tournament.classed}}</td>
+                    <td>{{ tournament.eloMin }} - {{ tournament.eloMax }}</td>
+                    <td>{{ tournament.ageCategory.value }}</td>
+                    <td>{{ tournament.genderCategory.value }}</td>
+                    <td>{{ tournament.typeCategory.value }}</td>
+                    <td>{{ tournament.roundsNumber }}</td>
+                    <td>min {{ tournament.minPlayers }}/max {{ tournament.maxPlayers }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

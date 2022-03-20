@@ -58,6 +58,39 @@ class Player implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Tournament::class)]
     private $tournaments;
 
+    #[ORM\Column(type: 'string', enumType: AgeCategory::class)]
+    private $ageCategory;
+
+    /**
+     * @return mixed
+     */
+    public function getAgeCategory()
+    {
+        return $this->ageCategory;
+    }
+
+    /**
+     * @param mixed $ageCategory
+     */
+    public function setAgeCategory(): void
+    {
+        if ($this->birthDate != null)
+        {
+            $today = new \DateTime();
+            $age = $today->diff($this->birthDate, true)->y;
+            if ( $age < 18 )
+            {
+                $this->ageCategory = AgeCategory::Junior;
+            }elseif ( $age < 60 )
+            {
+                $this->ageCategory = AgeCategory::Senior;
+            }else
+            {
+                $this->ageCategory = AgeCategory::Veteran;
+            }
+        }
+    }
+
     /**
      * @return mixed
      */
@@ -218,7 +251,11 @@ class Player implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = [];
+        /** @var Role $role */
+        foreach ($this->roles as $role) {
+            $roles[] = $role->getLabel();
+        }
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
@@ -255,4 +292,6 @@ class Player implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+
 }

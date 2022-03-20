@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des joueurs{% endblock %}
+
+{% block body %}
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Catégorie d'âge</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Classement</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for player in players %}
+                <tr>
+                    <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt=""></td>
+                    <td>{{ player.lastName }}</td>
+                    <td>{{ player.firstName }}</td>
+                    <td>{{ player.ageCategory.value}}</td>
+                    <td>{{ player.gender.value }}</td>
+                    <td>{{ player.elo }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

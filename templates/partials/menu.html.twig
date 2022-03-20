@@ -11,5 +11,21 @@
                 <i class="fa fa-user-plus me-2"></i>Register
             </a>
         </li>
+        </li>
+        <li class="{{ routeName == 'security_login' ? 'active' : '' }}">
+            <a href="{{ path('security_login') }}">
+                <i class="fa fa-sign-in-alt me-2"></i>Login
+            </a>
+        </li>
+        <li class="{{ routeName == 'app_player' ? 'active' : '' }}">
+            <a href="{{ path('app_player') }}">
+                <i class="fa fa-chess-king me-2"></i>Joueurs
+            </a>
+        </li>
+        <li class="{{ routeName == 'app_tournament' ? 'active' : '' }}">
+            <a href="{{ path('app_tournament') }}">
+                <i class="fa fa-trophy me-2"></i>Tournois
+            </a>
+        </li>
     </ul>
 </nav>
