@@ -8,11 +8,14 @@ use App\Entity\Tournament;
 use App\Entity\TypeCategory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddTournamentType extends AbstractType
@@ -36,54 +39,56 @@ class AddTournamentType extends AbstractType
                 'required' => true,
                 'attr' =>  [ 'class' => 'form-control']
             ])
-            ->add('classed', CheckboxType::class,[
-                'label_attr' => ['class' => 'form-label'],
-                'attr' =>  [ 'class' => 'form-check']
-            ])
-            ->add('eloMin', IntegerType::class, [
-                'label_attr' => ['class' => 'form-label'],
-                'attr' =>  [ 'class' => 'form-control']
-            ])
-            ->add('eloMax', IntegerType::class, [
-                'label_attr' => ['class' => 'form-label'],
-                'attr' =>  [ 'class' => 'form-control']
-            ])
-            ->add('ageCategory', EnumType::class, [
+//            ->add('classed', CheckboxType::class,[
+//                'label_attr' => ['class' => 'form-label'],
+//                'attr' =>  [ 'class' => 'form-check']
+//            ])
+//            ->add('eloMin', IntegerType::class, [
+//                'label_attr' => ['class' => 'form-label'],
+//                'attr' =>  [ 'class' => 'form-control']
+//            ])
+//            ->add('eloMax', IntegerType::class, [
+//                'label_attr' => ['class' => 'form-label'],
+//                'attr' =>  [ 'class' => 'form-control']
+//            ])
+            ->add('ageCategories', EnumType::class, [
                 'class' => AgeCategory::class,
-//                'multiple' => true,
+                'multiple' => true,
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' =>  [ 'class' => 'form-select']
             ])
-            ->add('genderCategory', EnumType::class, [
+
+            ->add('genderCategories', EnumType::class, [
                 'class' => Gender::class,
-//                'multiple' => true,
+                'multiple' => true,
                 'label_attr' => ['class' => 'form-label'],
                 'required' => true,
                 'attr' =>  [ 'class' => 'form-select']
             ])
-            ->add('typeCategory', EnumType::class, [
-                'class' => TypeCategory::class,
-                'label_attr' => ['class' => 'form-label'],
-                'required' => true,
-                'attr' =>  [ 'class' => 'form-select']
-            ])
-            ->add('roundsNumber', IntegerType::class,[
-                'label_attr' => ['class' => 'form-label'],
-                'required' => true,
-                'attr' =>  [ 'class' => 'form-control']
-            ])
-            ->add('minPlayers', IntegerType::class, [
-                'label_attr' => ['class' => 'form-label'],
-                'required' => true,
-                'attr' =>  [ 'class' => 'form-control']
-            ])
-            ->add('maxPlayers', IntegerType::class,[
-                'label_attr' => ['class' => 'form-label'],
-                'required' => true,
-                'attr' =>  [ 'class' => 'form-control']
-            ])
+//            ->add('typeCategory', EnumType::class, [
+//                'class' => TypeCategory::class,
+//                'label_attr' => ['class' => 'form-label'],
+//                'required' => true,
+//                'attr' =>  [ 'class' => 'form-select']
+//            ])
+//            ->add('roundsNumber', IntegerType::class,[
+//                'label_attr' => ['class' => 'form-label'],
+//                'required' => true,
+//                'attr' =>  [ 'class' => 'form-control']
+//            ])
+//            ->add('minPlayers', IntegerType::class, [
+//                'label_attr' => ['class' => 'form-label'],
+//                'required' => true,
+//                'attr' =>  [ 'class' => 'form-control']
+//            ])
+//            ->add('maxPlayers', IntegerType::class,[
+//                'label_attr' => ['class' => 'form-label'],
+//                'required' => true,
+//                'attr' =>  [ 'class' => 'form-control']
+//            ])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

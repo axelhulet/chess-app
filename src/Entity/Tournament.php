@@ -27,7 +27,7 @@ class Tournament
     #[Assert\NotBlank]
     private $date;
 
-    #[ORM\Column(type: 'boolean', nullable: false, options: ['default'=>1] )]
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default'=>1] )]
     private $classed;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -36,27 +36,69 @@ class Tournament
     #[ORM\Column(type: 'integer', nullable: true)]
     private $eloMax;
 
-    #[ORM\Column(type: 'string', enumType: AgeCategory::class)]
-    private $ageCategory;
+    #[ORM\Column(type: 'json')]
+    private $ageCategories;
 
-    #[ORM\Column(type: 'string', enumType: Gender::class)]
-    private $genderCategory;
+    #[ORM\Column(type: 'json')]
+    private $genderCategories;
 
-    #[ORM\Column(type: 'string', enumType: TypeCategory::class)]
+    #[ORM\Column(type: 'string',nullable: true, enumType: TypeCategory::class)]
     private $typeCategory;
 
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank]
     private $roundsNumber;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $minPlayers;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: false)]
     private $maxPlayers;
 
     #[ORM\Column(type: 'boolean', options: ['default'=>1] )]
     private $active;
+
+    /**
+     * @return mixed
+     */
+    public function getAgeCategories()
+    {
+        return $this->ageCategories;
+    }
+
+    /**
+     * @param mixed $ageCategories
+     * @return Tournament
+     */
+    public function setAgeCategories($ageCategories)
+    {
+        $this->ageCategories = $ageCategories;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGenderCategories()
+    {
+        return $this->genderCategories;
+    }
+
+    /**
+     * @param mixed $genderCategories
+     * @return Tournament
+     */
+    public function setGenderCategories($genderCategories)
+    {
+        $this->genderCategories = $genderCategories;
+        return $this;
+    }
+
+
+//    public function __construct() {
+//        $this->ageCategory = [];
+//    }
+
+
 
     /**
      * @return mixed
@@ -154,37 +196,6 @@ class Tournament
         $this->eloMax = $eloMax;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAgeCategory()
-    {
-        return $this->ageCategory;
-    }
-
-    /**
-     * @param mixed $ageCategory
-     */
-    public function setAgeCategory($ageCategory): void
-    {
-        $this->ageCategory = $ageCategory;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGenderCategory()
-    {
-        return $this->genderCategory;
-    }
-
-    /**
-     * @param mixed $genderCategory
-     */
-    public function setGenderCategory($genderCategory): void
-    {
-        $this->genderCategory = $genderCategory;
-    }
 
     /**
      * @return mixed

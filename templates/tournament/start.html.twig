@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Commencer le tournoi
+{% endblock %}
+
+{% block body %}
+  <h2> Bienvenue au {{ tournament.name }} </h2>
+
+    <ul>
+        <li>Le {{ tournament.date | date("d-m-Y") }} à {{ tournament.city }}</li>
+        <li>Catégories d'âge: {% for value in tournament.ageCategories %}
+                {{ value }}
+            {% endfor %}</li>
+        <li>Catégories de genre: {% for value in tournament.genderCategories %}
+                {{ value }}
+            {% endfor %}</li>
+        <li>Tournoi en {{ tournament.roundsNumber }}  rounds de {{ (tournament.maxPlayers/2) |round (0, 'ceil') }} match</li>
+    </ul>
+    <h4>Joueurs</h4>
+    <ul>
+    {% for player in players %}
+        <li>{{ player.lastName }} {{ player.firstName }}</li>
+    {% endfor %}
+    </ul>
+    <h4>Premier round</h4>
+    <table>
+        <thead>
+            <tr>
+            {% for i in 1..players|length %}
+                <th>Player #{{ i }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for player in players %}
+                <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt="">{{ player.lastName }} {{ player.firstName }}</td>
+            {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+

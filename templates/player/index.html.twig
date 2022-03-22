@@ -12,7 +12,6 @@
                 <th scope="col">Prénom</th>
                 <th scope="col">Catégorie d'âge</th>
                 <th scope="col">Genre</th>
-                <th scope="col">Classement</th>
             </tr>
             </thead>
             <tbody>
@@ -23,7 +22,6 @@
                     <td>{{ player.firstName }}</td>
                     <td>{{ player.ageCategory.value}}</td>
                     <td>{{ player.gender.value }}</td>
-                    <td>{{ player.elo }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -10,14 +10,12 @@
         <table class="table">
             <thead>
             <tr>
+                <th></th>
                 <th scope="col">Nom</th>
                 <th scope="col">Ville</th>
                 <th scope="col">Date</th>
-                <th scope="col">Classé</th>
-                <th scope="col">Elo</th>
                 <th scope="col">Catégorie d'âge</th>
                 <th scope="col">Genre</th>
-                <th scope="col">Type</th>
                 <th scope="col">Rondes</th>
                 <th scope="col">Joueurs</th>
             </tr>
@@ -25,16 +23,22 @@
             <tbody>
             {% for tournament in tournaments %}
                 <tr>
+                    <td><a class="btn" href="{{ path('tournament_start',{id: tournament.id} ) }}" ><i class="fa fa-play-circle fa-lg "></i></a></td>
                     <td>{{ tournament.name }}</td>
                     <td>{{ tournament.city }}</td>
                     <td>{{ tournament.date | date("d-m-Y") }}</td>
-                    <td>{{ tournament.classed}}</td>
-                    <td>{{ tournament.eloMin }} - {{ tournament.eloMax }}</td>
-                    <td>{{ tournament.ageCategory.value }}</td>
-                    <td>{{ tournament.genderCategory.value }}</td>
-                    <td>{{ tournament.typeCategory.value }}</td>
+                    <td>
+                        {% for value in tournament.ageCategories %}
+                        {{ value }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for value in tournament.genderCategories %}
+                        {{ value }}
+                        {% endfor %}
+                    </td>
                     <td>{{ tournament.roundsNumber }}</td>
-                    <td>min {{ tournament.minPlayers }}/max {{ tournament.maxPlayers }}</td>
+                    <td>{{ tournament.maxPlayers }}</td>
                 </tr>
             {% endfor %}
             </tbody>
