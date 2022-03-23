@@ -63,9 +63,13 @@ class TournamentController extends AbstractController
 
         $tournament = $repo->find($id);
         $players = $repo2->findByAgeAndGender($tournament->getGenderCategories(), $tournament->getAgeCategories());
+        shuffle($players);
+        $player1 = array_shift($players);
+
         return $this->render('tournament/start.html.twig', [
             'tournament' => $tournament,
-            'players' => $players
+            'players' => $players,
+            'player1' => $player1
         ]);
     }
 }

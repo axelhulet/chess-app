@@ -5,40 +5,59 @@
 {% endblock %}
 
 {% block body %}
-  <h2> Bienvenue au {{ tournament.name }} </h2>
+    <div class="tourn-head">
+        <h2> Bienvenue au {{ tournament.name }} </h2>
 
-    <ul>
-        <li>Le {{ tournament.date | date("d-m-Y") }} à {{ tournament.city }}</li>
-        <li>Catégories d'âge: {% for value in tournament.ageCategories %}
-                {{ value }}
-            {% endfor %}</li>
-        <li>Catégories de genre: {% for value in tournament.genderCategories %}
-                {{ value }}
-            {% endfor %}</li>
-        <li>Tournoi en {{ tournament.roundsNumber }}  rounds de {{ (tournament.maxPlayers/2) |round (0, 'ceil') }} match</li>
-    </ul>
-    <h4>Joueurs</h4>
-    <ul>
-    {% for player in players %}
-        <li>{{ player.lastName }} {{ player.firstName }}</li>
-    {% endfor %}
-    </ul>
-    <h4>Premier round</h4>
-    <table>
-        <thead>
-            <tr>
-            {% for i in 1..players|length %}
-                <th>Player #{{ i }}</th>
-            {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            {% for player in players %}
-                <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt="">{{ player.lastName }} {{ player.firstName }}</td>
-            {% endfor %}
-            </tr>
-        </tbody>
-    </table>
+        <ul>
+            <li>Le {{ tournament.date | date("d-m-Y") }} à {{ tournament.city }}</li>
+            <li>Catégories d'âge: {% for value in tournament.ageCategories %}
+                    {{ value }}
+                {% endfor %}</li>
+            <li>Catégories de genre: {% for value in tournament.genderCategories %}
+                    {{ value }}
+                {% endfor %}</li>
+            <li>Tournoi en {{ tournament.roundsNumber }}  rounds de {{ (tournament.maxPlayers/2) |round (0, 'ceil') }} match</li>
+        </ul>
+        <h4>Joueurs</h4>
+        <ul>
+            <li>{{ player1.lastName }} {{ player1.firstName }}</li>
+        {% for player in players %}
+            <li>{{ player.lastName }} {{ player.firstName }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="tourn-rounds">
+        {% for i in 1..tournament.roundsNumber %}
+        <h4>Round #{{ i }}</h4>
+        <table>
+            <thead>
+                <tr>
+                {% for i in 1..(players|length/2)+1 %}
+                    <th>Match #{{ i }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img class="avatar" src="{{ asset('pictures/' ~ player1.picture) }}" alt="">{{ player1.lastName }} {{ player1.firstName }}
+                    </td>
+                {% for player in players|slice(0,players|length/2)  %}
+                    <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt="">{{ player.lastName }} {{ player.firstName }}</td>
+                {% endfor %}
+                </tr>
+                <tr>
+                    <td>
+                        <img class="avatar" src="{{ asset('pictures/' ~ players|last.picture) }}" alt="">{{ players|last.lastName }} {{ players|last.firstName }}
+                    </td>
+                    {% for player in players|slice(players|length/2,players|length/2)|reverse  %}
+                        <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt="">{{ player.lastName }} {{ player.firstName }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+            {% set players = swap_players(players) %}
+        {% endfor %}
+    </div>
 {% endblock %}
 
