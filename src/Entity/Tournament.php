@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TournamentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TournamentRepository::class)]
@@ -56,6 +57,39 @@ class Tournament
 
     #[ORM\Column(type: 'boolean', options: ['default'=>1] )]
     private $active;
+
+    #[ORM\ManyToMany(targetEntity: Player::class)]
+    private $player;
+
+    /**
+     * @return mixed
+     */
+    public function getPlayer()
+    {
+        return $this->player;
+    }
+
+    /**
+     * @param mixed $player
+     * @return Tournament
+     */
+    public function setPlayer($player)
+    {
+        $this->player = $player;
+        return $this;
+    }
+
+
+
+    public function addPlayer($players)
+    {
+        foreach ($players as $player) {
+            $this->player->add($player);
+        }
+        return $this;
+    }
+
+
 
     /**
      * @return mixed

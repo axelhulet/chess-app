@@ -20,44 +20,24 @@
         </ul>
         <h4>Joueurs</h4>
         <ul>
-            <li>{{ player1.lastName }} {{ player1.firstName }}</li>
         {% for player in players %}
             <li>{{ player.lastName }} {{ player.firstName }}</li>
         {% endfor %}
         </ul>
     </div>
-    <div class="tourn-rounds">
-        {% for i in 1..tournament.roundsNumber %}
-        <h4>Round #{{ i }}</h4>
-        <table>
-            <thead>
-                <tr>
-                {% for i in 1..(players|length/2)+1 %}
-                    <th>Match #{{ i }}</th>
-                {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <img class="avatar" src="{{ asset('pictures/' ~ player1.picture) }}" alt="">{{ player1.lastName }} {{ player1.firstName }}
-                    </td>
-                {% for player in players|slice(0,players|length/2)  %}
-                    <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt="">{{ player.lastName }} {{ player.firstName }}</td>
-                {% endfor %}
-                </tr>
-                <tr>
-                    <td>
-                        <img class="avatar" src="{{ asset('pictures/' ~ players|last.picture) }}" alt="">{{ players|last.lastName }} {{ players|last.firstName }}
-                    </td>
-                    {% for player in players|slice(players|length/2,players|length/2)|reverse  %}
-                        <td><img class="avatar" src="{{ asset('pictures/' ~ player.picture) }}" alt="">{{ player.lastName }} {{ player.firstName }}</td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-            {% set players = swap_players(players) %}
+    <div class="tourn-matches-list">
+        {% for match in matches %}
+            <div class="card">
+                <div class="card-body">
+                    <ul>
+                        <li>{{ match.player1.firstname }} {{ match.player1.lastname }}</li>
+                        <li>{{ match.player2.firstname }} {{ match.player2.lastname }}</li>
+                        <li> Round #{{ match.round }}</li>
+                    </ul>
+                </div>
+            </div>
         {% endfor %}
     </div>
+
 {% endblock %}
 

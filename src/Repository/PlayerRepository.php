@@ -114,6 +114,20 @@ class PlayerRepository extends ServiceEntityRepository implements PasswordUpgrad
 
         $qb->andWhere('p.gender IN(:g1) ');
         $qb->andWhere('p.ageCategory IN(:a1) ');
+        $qb->setParameter('g1',  array_map(fn($it) => $it->value,$genderCategories));
+        $qb->setParameter('a1',  array_map(fn($it) => $it->value,$ageCategories));
+
+//        permet de récupérer une valeur unique et non un objet ou une collection
+        return $qb->getQuery()->getResult();
+    }
+    public function findByAgeAndGender2($genderCategories, $ageCategories)
+    {
+
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p.active = 1');
+
+        $qb->andWhere('p.gender IN(:g1) ');
+        $qb->andWhere('p.ageCategory IN(:a1) ');
         $qb->setParameter('g1',  $genderCategories);
         $qb->setParameter('a1',  $ageCategories);
 

@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -55,8 +57,30 @@ class Player implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean', options: ['default'=>1] )]
     private $active;
 
-    #[ORM\ManyToMany(targetEntity: Tournament::class)]
-    private $tournaments;
+//    #[ORM\ManyToMany(targetEntity: Tournament::class)]
+//    private $tournaments;
+//
+//    public function __construct() {
+//        $this->tournaments = new ArrayCollection();
+//    }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getTournaments()
+//    {
+//        return $this->tournaments;
+//    }
+//
+//    /**
+//     * @param mixed $tournaments
+//     * @return Player
+//     */
+//    public function addTournament($tournament)
+//    {
+//        $this->tournaments->add($tournament);
+//        return $this;
+//    }
 
     #[ORM\Column(type: 'string', enumType: AgeCategory::class)]
     private $ageCategory;
@@ -203,21 +227,7 @@ class Player implements UserInterface, PasswordAuthenticatedUserInterface
         $this->active = $active;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTournaments()
-    {
-        return $this->tournaments;
-    }
 
-    /**
-     * @param mixed $tournaments
-     */
-    public function setTournaments($tournaments): void
-    {
-        $this->tournaments = $tournaments;
-    }
 
     public function getId(): ?int
     {

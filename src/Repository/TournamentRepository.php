@@ -73,4 +73,9 @@ class TournamentRepository extends ServiceEntityRepository
         ;
     }
     */
+//    public function findPlayersByTourn($id)
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->where(id = $id)
+//    }
 }
