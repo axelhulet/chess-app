@@ -7,6 +7,8 @@ use App\Entity\ChessMatch;
 use App\Entity\Gender;
 use App\Entity\Tournament;
 use App\Form\AddTournamentType;
+use App\Form\ChessMatchResultType;
+use App\Form\ResultsType;
 use App\Repository\ChessMatchRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\TournamentRepository;
@@ -33,7 +35,6 @@ class TournamentController extends AbstractController
         $tournament = new Tournament();
         $form = $this->createForm(AddTournamentType::class, $tournament);
         $form->handleRequest($request);
-//        $player1 = array_shift($players);
 
         if ($form->isSubmitted() && $form->isValid()){
             $playerCount = $repo2->countBySearch($tournament->getGenderCategories(), $tournament->getAgeCategories());
@@ -50,13 +51,16 @@ class TournamentController extends AbstractController
                 return $this->redirectToRoute('app_tournament');
             }
             $tournament->setActive('1');
-            $tournament->addPlayer($players);
+            foreach ($players as $player)
+            {
+                $tournament->addPlayer($player);
+            }
+
 
             $em->persist($tournament);
             $em->flush();
 
             shuffle($players);
-//            dump($players);
             for ($i = 1; $i < $playerCount ; $i++)
             {
                 for ($j = 0; $j < $playerCount/2; $j++)
@@ -67,13 +71,11 @@ class TournamentController extends AbstractController
                     $chessMatch->setRound($i);
                     $chessMatch->setTournament($tournament);
                     $em->persist($chessMatch);
-//                    dump($chessMatch);
                 }
                 $p1 = array_shift($players);
                 $pl = array_pop($players);
                 array_unshift($players, $pl);
                 array_unshift($players, $p1);
-//                dump($players);
             }
 
             $em->flush();
@@ -88,16 +90,21 @@ class TournamentController extends AbstractController
     }
 
     #[Route('/tournament/start/{id}', name: 'tournament_start')]
-    public function startTournament($id, TournamentRepository $repo, PlayerRepository $repo2, ChessMatchRepository $repo3) {
+    public function startTournament($id, Request $request, EntityManagerInterface $em, TournamentRepository $repo, PlayerRepository $repo2, ChessMatchRepository $repo3) {
 
         $tournament = $repo->find($id);
         $players = $tournament->getPlayer();
+        $roundsNumber = $tournament->getRoundsNumber();
         $matches = $repo3->findBy(array('tournament' => $tournament));
+        $form = $this->createForm(ResultsType::class, $matches);
+        $form->handleRequest($request);
 
         return $this->render('tournament/start.html.twig', [
             'tournament' => $tournament,
             'players' => $players,
-            'matches' => $matches
+            'roundsNumber' => $roundsNumber,
+            'matches' => $matches,
+            'form' => $form->createView()
         ]);
     }
 }

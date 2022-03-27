@@ -81,11 +81,10 @@ class Tournament
 
 
 
-    public function addPlayer($players)
+    public function addPlayer($player)
     {
-        foreach ($players as $player) {
-            $this->player->add($player);
-        }
+
+        $this->player[] = $player;
         return $this;
     }
 
