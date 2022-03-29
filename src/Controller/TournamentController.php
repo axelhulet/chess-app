@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\AgeCategory;
 use App\Entity\ChessMatch;
 use App\Entity\Gender;
+use App\Entity\Results;
 use App\Entity\Tournament;
 use App\Form\AddTournamentType;
 use App\Form\ChessMatchResultType;
@@ -96,9 +97,16 @@ class TournamentController extends AbstractController
         $players = $tournament->getPlayer();
         $roundsNumber = $tournament->getRoundsNumber();
         $matches = $repo3->findBy(array('tournament' => $tournament));
-        $form = $this->createForm(ResultsType::class, $matches);
+//        $matchId = $repo2->findByMatch(29);
+//        dd($matchId);
+        $results = new Results();
+        foreach ($matches as $match)
+        {
+            $results->getResults()->add($match);
+        }
+        $form = $this->createForm(ResultsType::class, $results);
         $form->handleRequest($request);
-
+//dd($form);
         return $this->render('tournament/start.html.twig', [
             'tournament' => $tournament,
             'players' => $players,

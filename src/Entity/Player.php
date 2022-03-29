@@ -303,5 +303,9 @@ class Player implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function __toString()
+    {
+        return $this->id;
+    }
 
 }

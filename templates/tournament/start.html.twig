@@ -26,7 +26,7 @@
         </ul>
     </div>
     <div class="tourn-matches-list">
-        {{ form_start(form) }}
+{#        {{ form_start(form) }}#}
         {% set color = ['solid', 'regular'] %}
         {% for i in 1..roundsNumber %}
             <div class="round">
@@ -40,7 +40,7 @@
                                         <li><i class="fa-{{ color[0] }} fa-chess-king me-2"></i>{{ match.player1.firstname }} {{ match.player1.lastname }}</li>
                                         <li><i class="fa-{{ color[1] }} fa-chess-king me-2"></i>{{ match.player2.firstname }} {{ match.player2.lastname }}</li>
                                     </ul>
-                                    {{ form_row(form.results) }}
+{#                                    {{ form_row(form.results) }}#}
                                 </div>
                             </div>
                     {% endif %}
@@ -49,8 +49,13 @@
             </div>
             {% set color = color|reverse %}
         {% endfor %}
-        {{ form_end() }}
+{#        {{ form_end() }}#}
     </div>
-
+{{ form_start(form) }}
+    {% for result in form.results %}
+            {{ form_row(result.id) }}
+        {{ form_row(result.result) }}
+    {% endfor %}
+    {{ form_end(form) }}
 {% endblock %}
 

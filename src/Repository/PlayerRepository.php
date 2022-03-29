@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Player;
+use App\Entity\ChessMatch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -132,6 +134,15 @@ class PlayerRepository extends ServiceEntityRepository implements PasswordUpgrad
         $qb->setParameter('a1',  $ageCategories);
 
 //        permet de récupérer une valeur unique et non un objet ou une collection
+        return $qb->getQuery()->getResult();
+    }
+    public function findByMatch($matchId)
+    {
+
+        $qb = $this->createQueryBuilder('p');
+        $qb->join('App\Entity\ChessMatch','cm', 'with','p.id = cm.player1 where cm.id = :m1');
+        $qb->setParameter('m1', $matchId);
+
         return $qb->getQuery()->getResult();
     }
 }

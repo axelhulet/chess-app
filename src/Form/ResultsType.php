@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Results;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,15 +15,16 @@ class ResultsType extends AbstractType
         $builder
             ->add('results', CollectionType::class,[
                 'entry_type' => ChessMatchResultType::class,
-                'allow_add' => true
+//                'allow_add' => true,
+//                'prototype' => true
             ])
         ;
     }
 
-//    public function configureOptions(OptionsResolver $resolver): void
-//    {
-//        $resolver->setDefaults([
-//            // Configure your form options here
-//        ]);
-//    }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+             'data_class' => Results::class
+        ]);
+    }
 }
