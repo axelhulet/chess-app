@@ -73,4 +73,14 @@ class ChessMatchRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findPlayersByMatch($matchId)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->select('m.player1');
+        $qb->where('m.id = 95');
+        $qb->setParameter('m1', $matchId);
+
+        return $qb->getQuery()->getResult();
+
+    }
 }

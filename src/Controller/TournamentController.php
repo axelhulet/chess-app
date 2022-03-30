@@ -97,8 +97,8 @@ class TournamentController extends AbstractController
         $players = $tournament->getPlayer();
         $roundsNumber = $tournament->getRoundsNumber();
         $matches = $repo3->findBy(array('tournament' => $tournament));
-//        $matchId = $repo2->findByMatch(29);
-//        dd($matchId);
+        $matchId = $repo3->findPlayersByMatch(95);
+        dd($matchId);
         $results = new Results();
         foreach ($matches as $match)
         {
